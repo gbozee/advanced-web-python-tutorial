@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="page.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+</head>
+<body>
+    <div class="cover">
+        <div class="container">
+            <div class="user-photo mdc-elevation--z3">
+                <img src="https://via.placeholder.com/150" alt='' onclick="document.getElementById('click-me').click()">
+            </div>
+
+            <p>Upload Picture</p>
+
+            <h1>Oyeniyi Omotayo</h1>
+            <h3>Account Number: 1234567890</h3>
+
+            
+            <form action="post" enctype="multipart/form-data">
+                <input type="file" name="myFile" style="display: none;" id="click-me">
+            </form>
+
+            <a href="index.html" id="button">Sign Out</a>
+        </div>
+        
+        <div class="wrapper">
+            <section> 
+                    <div class="tabs">
+                            <input type="radio" name="tabs" name="tabs" class="modal-open"  data-modal="modal2" id="create-bank-account">
+                        <label for="create-bank-account">Create Account</label>
+                        <div class="tab">
+                            <div class="modal" id="modal2">
+                                <div class="modal-content">
+                                    <span class="close">&times;</span>
+                                    
+                                    <h1>Select Account Type</h1>
+
+                                    <label for="types">Types</label>
+                                    <input type='text' ... list='listid'>
+                                    <datalist id='listid'>
+                                    <option label='Savings' value='Savings'>
+                                    <option label='Current' value='Current'>
+                                    ...
+                                    </datalist>
+                                    <button>Create Account</button>
+                                </div>
+                            </div> 
+                        </div>
+                        
+                         <input type="radio" name="tabs" name="tabs" class="modal-open"  data-modal="modal15" id="buy-airtime">
+                        <label for="buy-airtime">Buy Airtime</label>
+                        <div class="tab">
+                            <div class="modal" id="modal15">
+                                <div class="modal-content">
+                                    <span class="close">&times;</span>
+                                    
+                                    <label for="networks">Networks</label>
+                                    <input type='text' ... list='listnetwork'>
+                                    <datalist id='listnetwork'>
+                                        <option label='Mtn' value='Mtn'>
+                                        <option label='Aitel' value='Aitel'>
+                                        <option label='Glo' value='Glo'>
+                                        <option label='Etisalat' value='Etisalat'>
+                                    </datalist>
+
+                                    <label for="mobile-num">Mobile Number</label>
+                                    <input type="text" name="mobile-num">
+
+                                    <label for="acc-password">Enter Password</label>
+                                    <input type="password" name="acct-password">
+
+                                    <button>PAY</button>
+                                </div>
+                            </div> 
+                        </div>
+
+                        <input type="radio" name="tabs" id="view-all-account">
+                          <label for="view-all-account">Notifications</label>
+                          <div class="tab">
+                            <h1>Recent Notifications</h1>     
+                <div class="list">
+                    <ul>
+                        <li>Date</li>
+                        <li>Description</li>
+                        <li>Amount</li>
+                    </ul>
+                    <ul>
+                        <li data-label="date">dd/mm/yy</li>
+                        <li data-label="Disription">Sms charge for March 2019</li>
+                        <li id="debit"data-label="amount">#52,00</li>
+                    </ul>
+                    
+                    <ul>
+                        <li data-label="date">dd/mm/yy</li>
+                        <li data-label="Disription">Your Account was Credited with the sum of</li>
+                        <li id="credit" data-label="amount">#20,000</li>  
+                    </ul>
+                    
+                    <ul>
+                        <li data-label="date">dd/mm/yy</li>
+                        <li data-label="Disription">Sms charge for March 2019</li>
+                        <li id="debit" data-label="amount">#52,00</li>
+                    </ul>
+                </div> 
+                <button class="sec">Load More</button>
+                </div>
+            </div>                                 
+        </div>
+    </div>        
+    <footer>
+        <p>Banka App &copy; 2019</p>
+    </footer>
+    <script src="modal.js" type="text/javascript"></script>    
+</body>
+</html> 
