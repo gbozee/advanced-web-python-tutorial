@@ -1,0 +1,11 @@
+starlette==0.13.0
+Jinja2==2.10.3
+
+pytest==5.3.2
+pytest-asyncio==0.10.0
+httpx==0.10.1
+requests==2.22.0
+aiofiles==0.4.0
+
+uvicorn==0.11.1
+-e .

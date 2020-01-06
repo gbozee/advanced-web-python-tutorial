@@ -1,0 +1,5 @@
+django==3.0.2
+
+# test framework
+pytest-django==3.7.0
+-e .

@@ -1,0 +1,91 @@
+:root {
+    --primary: #ddd;
+    --dark: #203f7d;
+    --light: #fff;
+    --shadow: 0 1px 5px rgb(226, 224, 224);
+    }
+    
+    body {
+        background: url(img/bg.png);
+        background-size: cover;
+        background-position: center;
+    }
+    
+    .forms {
+        margin: auto;
+        padding: 10rem;
+        width: 50%;
+    }
+    
+    
+    label {
+      color: #fab549;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+    
+    h1 {
+        color: #fab549;
+        text-align: center;
+    }
+    
+    p {
+        color: var(--primary);
+        text-align: center;
+    
+    }
+    
+    button,
+    #button {
+        background: var(--dark);
+        padding: 10px;
+        margin: 5px 0 20px 0;
+        margin: auto;
+        color: #fab549;
+        border: var(--primary) 2px solid;
+        border-radius: 5px;
+        display: block;
+        width: 50%;
+        text-decoration: none;
+        text-transform: uppercase;
+        transition: background-color 1s ease-out;
+    }
+    
+    button:hover {
+        background: #fab549;
+        color: var(--dark);
+    }
+    #button:hover{
+        background: #fab549;
+        color: var(--dark);
+    }
+    
+    a {
+        display: block;
+        margin-bottom: 20px;
+        text-decoration: none;
+        color: #fab549;
+        font-size: 12px;
+        text-align: center;
+        text-transform: uppercase;
+        margin-top: 20px;
+    }
+    
+    a:hover {
+        text-decoration: underline;
+        color: #ddd;
+    }
+    
+    
+    input{
+        width: 100%;
+        padding: 10px;
+        margin: 5px 0 20px 0;
+        display: inline-block;
+        background: #ddd;
+        outline: none;
+    }
+      
+    input:focus {
+        background: var(--shadow);
+    }

@@ -1,0 +1,291 @@
+:root {
+    --primary: #ddd;
+    --dark: #203f7d;
+    --light: #fff;
+    --shadow: 0 1px 5px rgb(226, 224, 224);
+    }  
+    
+    body {
+        margin: 0;
+    }
+
+    header .container {
+        background: var(--dark);
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    @media (max-width: 600px) {
+        header .container{
+            flex-direction: column;
+        }
+    }
+
+    
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+    
+    header {
+        background: #203f7d;
+        color: var(--primary);
+        padding-top: 30px;
+        min-height: 70px;
+    }
+    
+    header a {
+        color: var(--primary);
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: 16px;
+    }
+    
+     header li {
+         display: inline;
+         padding: 0 10px 0 10px;
+     }
+    
+     header #banking{
+         float: left;
+     }
+    
+     header #banking h1 {
+        margin: 0;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+     }
+    
+     header nav {
+         float: right;
+         margin-top: 10px;
+     }
+    
+     .wrapper {
+        background: var(--primary);
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    
+    .btn {
+        background: var(--dark);
+        padding: 0.6rem 1.3rem;
+        color: #fab549;
+        border: var(--primary) 2px solid;
+        border-radius: 5px;
+        display: block;
+        width: 20%;
+        text-align: center;
+        text-transform: uppercase;
+        transition: background-color 1s ease-out; 
+    }
+    
+    .btn:hover {
+        background: #fab549;
+        color: var(--dark);
+    }
+    
+    .top-container{
+        display: grid;
+        grid-gap: 20px;
+        grid-template-areas: 'showcase top-box-a';
+    }
+    
+    .showcase {
+        grid-area: showcase;
+        min-height: 400px;
+        background: url(img/bankkk.png);
+        background-size: cover;
+        background-position: center;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: center;
+        box-shadow: var(--shadow);
+    
+    }
+    
+    .top-box {
+        background: var(--dark);
+        display: grid;
+        margin: auto;
+        align-items: center;
+        justify-items: center;
+        padding: 1.5rem;
+        box-shadow: var(--shadow);
+    }
+    
+    .showcase h1 {
+      font-size: 4rem;
+      margin-bottom: 0;
+      color: #fab549;
+    }
+    
+    .showcase p {
+      font-size: 1.3rem;
+      margin-top: 0;
+      color: var(--dark);
+    }
+    
+    #tob-box-a{
+        grid-area: top-box;
+    }
+    
+    .sign-up {
+        margin: auto;
+    }
+    
+    .sign-up label {
+      color: #fab549;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+    
+    .sign-up label {
+        color: #fab549;
+        text-transform: uppercase;
+        font-size: 12px;
+    }
+    
+    h3 {
+        color: #fab549;
+        text-align: center;
+    }
+    
+    .sign-up .btn-a {
+        background: var(--dark);
+        padding: 10px;
+        margin: 5px 0 10px 0;
+        margin: auto;
+        color: #fab549;
+        border: var(--primary) 2px solid;
+        border-radius: 5px;
+        display: block;
+        width: 45%;
+        text-transform: uppercase;
+        transition: background-color 1s ease-out;
+    }
+    
+    .sign-up .btn-a:hover {
+        background: #fab549;
+        color: var(--dark);
+        text-decoration: none;
+    }
+    
+    .sign-up a {
+        display: block;
+        margin-bottom: 20px;
+        text-decoration: none;
+        color: #fab549;
+        font-size: 12px;
+        text-align: center;
+        text-transform: uppercase;
+        margin-top: 10px;
+    }
+    
+    .sign-up a:hover {
+        text-decoration: underline;
+        color: #ddd;
+    }
+    
+    
+    input[type=text], input[type=password], input[type=email] {
+        width: 90%;
+        padding: 10px;
+        margin: 5px 0 10px 0;
+        display: inline-block;
+        background: var(--dark);
+        outline: none;
+    }
+      
+    input[type=text]:focus, input[type=password]:focus, input[type=email] {
+        background: var(--shadow);
+    }
+    
+    .txt{
+        background: url(img/ban.png);
+        background-size: cover;
+        background-position: center;
+        padding: 4rem;
+        text-align: center;
+        font: size 2rem;
+    }
+    
+    .txt h1{
+        color: var(--dark);
+        text-transform: uppercase;
+    }
+    
+    .txt p{
+        color: var(--dark);
+        text-transform: none;
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+    
+    
+    .boxes {
+        display: grid;
+        grid-gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+    
+    .box {
+        background:  #fab549;
+        text-align: center;
+        box-shadow: var(--shadow);
+        padding: 1.5rem 2rem;
+    }
+    
+    .box h2 {
+        color: var(--dark);
+    }
+    
+    #box1 .btn-a {
+        background: #fab549;
+        padding: 10px;
+        margin: 5px 0 10px 0;
+        margin: auto;
+        color: var(--dark);
+        text-decoration: none;
+        border: var(--dark) 2px solid;
+        border-radius: 5px;
+        display: block;
+        width: 45%;
+        text-transform: uppercase;
+    }
+    
+    #box1 .btn-a:hover {
+        background: var(--dark);
+        color: #fab549;
+        text-decoration: none;
+        transition: background-color 1s ease-out;
+    }
+    
+    #icon{
+        color: var(--dark);
+        font-size: 60px;
+    }
+    
+    footer {
+        margin-top: 0px;
+        background: var(--dark);
+        color: #fab549; 
+        text-align: center;
+        padding: 1rem;
+    }
+    
+    @media (max-width: 700px) {
+        .top-container {
+            grid-template-areas: 
+            'showcase'
+            'top-box-a'; 
+        }
+    
+        .showcase h1 {
+            font-size: 2.5rem;
+    
+        }
+    }
+    
