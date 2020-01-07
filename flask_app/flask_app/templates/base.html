@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BankaApp</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div id="banking">
+                <a href="{{url_for('home')}}"><h1>Banka</h1></a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="{{url_for('about')}}">About</a></li>
+                    <li><a href="{{url_for('services')}}">Services</a></li>
+                    <li><a href="{{url_for('admin')}}">Admin</a></li>
+                    <li><a href="{{url_for('staff')}}">Staff</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="wrapper">
+            {% block body %}{% endblock %}
+        <footer>
+            <p>Banka App &copy; 2019</p>
+        </footer>
+        
+    </div>
+</body> 
+</html>

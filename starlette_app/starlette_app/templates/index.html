@@ -1,93 +1,79 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>BankaApp</title>
-    <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-</head>
-<body>
-    <header>
-        <div class="container">
-            <div id="banking">
-                <a href="index.html"><h1>Banka</h1></a>
+{% extends "./base.html" %}
+{% block body %}
+<section class="top-container">    
+        <header class="showcase" id="about">
+            <h1>Welcome to Banka</h1>
+            <p>Banka is a light-weight core banking application that powers banking operations like account creation, customer deposit and withdrawals. </p>
+            <a href="" class="btn">Learn More</a>
+        </header> 
+        <div class="top-box" id="top-box-a">
+            <h3>Sign Up Now</h3>
+            <form action="{{url_for('signup')}}" method="POST" class="sign-up">
+            <div class="form-control" class="{% if errors.full_name %}error{% endif %}">
+                <label >Full Name</label>
+                <input type="text" name="full_name" value="{{form.full_name}}" placeholder="Full Name">
+                {% if errors.full_name %}
+                <span>{{errors.full_name}}</span>
+                {% endif %}
             </div>
-            <nav>
-                <ul>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#services">Services</a></li>
-        
-                    <li><a href={{url_for("admin")}}>Admin</a></li>
-                    <li><a href={{url_for("staff")}}>Staff</a></li>
-                </ul>
-            </nav>
+            <div class="form-control" class="{% if errors.full_name %}error{% endif %}">
+                <label >Email Adderss</label>
+                <input type="email" name="email" value="{{form.email}}" placeholder="Email Address">
+                {% if errors.email %}
+                <span>{{errors.email}}</span>
+                {% endif %}
+            </div>
+<div class="form-control" class="{% if errors.full_name %}error{% endif %}">
+    <label >Create Password</label>
+    <input type="password" name="password" value="{{form.password}}" placeholder="Create Password">
+    {% if errors.password %}
+                <span>{{errors.password}}</span>
+                {% endif %}
+</div>
+<div class="form-control" class="{% if errors.full_name %}error{% endif %}">
+    <label >Confirm Password</label>
+    <input type="password" name="confirm_password" value="{{form.confirm_password}}" placeholder="Confirm Password">
+    {% if errors.confirm_password %}
+                <span>{{errors.confirm_password}}</span>
+                {% endif %}
+</div>
+<div class="form-control">
+    <button type="submit" class="btn-a">Sign UP</button>
+    <!-- <a href={{url_for("login")}} class="btn-a" >Log In</a>  -->
+    <a href={{url_for("login")}}>Don't have an account? sign-up</a>
+
+</div>
+            </form>
+        </div> 
+</section>
+
+<section class="txt" id="services"> 
+        <h1>Features</h1>
+        <p>Banka allows you to create multiple bank accounts from any mobile device. Our User dashboad is friendly, simple, editable profile picture field and real time transaction history notification.
+    <div class="boxes">
+        <div class="box" id="box1">
+            <i class="fas fa-sign-in-alt" id="icon"></i>
+            <h2>Login Here</h2>
+            <a href="login.html" class="btn-a" >Log In</a>
         </div>
-    </header>
-    
-    <div class="wrapper">
-            <section class="top-container">    
-                    <header class="showcase" id="about">
-                        <h1>Welcome to Banka</h1>
-                        <p>Banka is a light-weight core banking application that powers banking operations like account creation, customer deposit and withdrawals. </p>
-                        <a href="" class="btn">Learn More</a>
-                    </header> 
-                    <div class="top-box" id="top-box-a">
-                        <h3>Sign Up Now</h3>
-                        <form action="#" class="sign-up">
-                            <label >Full Name</label>
-                            <input type="text" name="name" placeholder="Full Name">
 
-                            <label >Email Adderss</label>
-                            <input type="email" name="email" placeholder="Email Address">
+        <div class="box">
+            <i class="far fa-address-card" id="icon"></i>
+            <h2>User Dashboard</h2>
+            
+        </div>
 
-                            <label >Create Password</label>
-                            <input type="password" name="password" placeholder="Create Password">
+        <div class="box">
+            <i class="fab fa-creative-commons-share" id="icon"></i>
+            <h2>Create Account</h2>
+        </div>
 
-                            <label >Confirm Password</label>
-                            <input type="password" name="password" placeholder="Confirm Password">
+        <div class="box">
+            <i class="far fa-bell" id="icon"></i>
+            <h2>Email Notifications</h2>
+            
+        </div>
 
-                            <a href={{url_for("login")}} class="btn-a" >Log In</a> 
-                            <a href={{url_for("sign_up")}}>Don't have an account? sign-up</a>
-                        </form>
-                    </div> 
-            </section>
-
-            <section class="txt" id="services"> 
-                    <h1>Features</h1>
-                    <p>Banka allows you to create multiple bank accounts from any mobile device. Our User dashboad is friendly, simple, editable profile picture field and real time transaction history notification.
-                <div class="boxes">
-                    <div class="box" id="box1">
-                        <i class="fas fa-sign-in-alt" id="icon"></i>
-                        <h2>Login Here</h2>
-                        <a href="login.html" class="btn-a" >Log In</a>
-                    </div>
-
-                    <div class="box">
-                        <i class="far fa-address-card" id="icon"></i>
-                        <h2>User Dashboard</h2>
-                        
-                    </div>
-
-                    <div class="box">
-                        <i class="fab fa-creative-commons-share" id="icon"></i>
-                        <h2>Create Account</h2>
-                    </div>
-
-                    <div class="box">
-                        <i class="far fa-bell" id="icon"></i>
-                        <h2>Email Notifications</h2>
-                        
-                    </div>
-    
-                </div>
-            </section>
-        <footer>
-            <p>Banka App &copy; 2019</p>
-        </footer>
-        
     </div>
-</body> 
-</html>
+</section>
+{% endblock %}
