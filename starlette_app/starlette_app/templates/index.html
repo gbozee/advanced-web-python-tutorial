@@ -19,8 +19,9 @@
                 <ul>
                     <li><a href="#about">About</a></li>
                     <li><a href="#services">Services</a></li>
-                    <li><a href="admin.html">Admin</a></li>
-                    <li><a href="staff.html">Staff</a></li>
+        
+                    <li><a href={{url_for("admin")}}>Admin</a></li>
+                    <li><a href={{url_for("staff")}}>Staff</a></li>
                 </ul>
             </nav>
         </div>
@@ -48,8 +49,8 @@
                             <label >Confirm Password</label>
                             <input type="password" name="password" placeholder="Confirm Password">
 
-                            <a href="login.html" class="btn-a" >Log In</a> 
-                            <a href="usersignup.html">Don't have an account? sign-up</a>
+                            <a href={{url_for("login")}} class="btn-a" >Log In</a> 
+                            <a href={{url_for("sign_up")}}>Don't have an account? sign-up</a>
                         </form>
                     </div> 
             </section>

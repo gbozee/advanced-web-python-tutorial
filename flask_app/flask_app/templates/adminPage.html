@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Staff Dashboard</title>
-    <link rel="stylesheet" href="page.css">
+    <title>Admin Dashboard</title>
+     <link rel="stylesheet" href="{{ url_for('static', filename='page.css') }}">
+
 </head>
 <body>
     <div class="cover">
@@ -14,69 +15,51 @@
                 <img src="https://via.placeholder.com/150" alt=''>
             </div>
             <h1>Omotayo Oyeniyi</h1>
-            <h3>Staff ID: 8342bed</h3>
+            <h3>Admin ID: 8342bed</h3>
+
             <ul>
                 <li>Omotayo@banka.com</li>
             </ul>
 
-            <a href="index.html" id="button">Sign Out</a>
+            <a href={{url_for("index")}} id="button">Sign Out</a>
         </div>
 
-            <div class="wrapper">
-                <section>
-                    <div class="tabs">
-                        <input type="radio" name="tabs" name="tabs" class="modal-open"  data-modal="modal2" id="credit-account">
-                        <label for="credit-account">Credit Account</label>
-                        <div class="tab">
-                            <div class="modal" id="modal2">
-                                <div class="modal-content">
-                                    <span class="close">&times;</span>
-                                    <label for="acct-numb">Account Number</label>
-                                    <input type="text" name="acct-numb">
+        <div class="wrapper">
+            <section> 
+                <div class="tabs">
+                    <input type="radio" name="tabs" class="modal-open"  data-modal="modal2"id="create-account">
+                    <label for="create-account">Create Account</label>
+                    <div class="modal" id="modal2">
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <label for="name">First Name</label>
+                            <input type="text" name="name">
 
-                                    <label for="amount">Amount</label>
-                                    <input type="text" name="amount">
+                            <label for="name">Last Name</label>
+                            <input type="text" name="name">
 
-                                    <label for="role">Status</label>
-                                    <input type='text' ... list='listid'>
-                                    <datalist id='listid'>
-                                    <option label='Savings' value='Savings'>
-                                    <option label='Current' value='Current'>
-                                    ...
-                                    </datalist>
-                                    <button>Credit Account</button>
-                                </div>
-                            </div> 
-                        </div>
+                            <label for="admin-staff-id">Email Address</label>
+                            <input type="email" name="email-address">
 
-                        <input type="radio" name="tabs" name="tabs" class="modal-open"  data-modal="modal15" id="debit-account">
-                        <label for="debit-account">Debit Account</label>
-                        <div class="tab">
-                            <div class="modal" id="modal15">
-                                <div class="modal-content">
-                                    <span class="close">&times;</span>
-                                    <label for="acct-numb">Account Number</label>
-                                    <input type="text" name="acct-numb">
-
-                                    <label for="amount">Amount</label>
-                                    <input type="text" name="amount">
-
-                                    <label for="role">Status</label>
-                                    <input type='text' ... list='listid'>
-                                    <datalist id='listid'>
-                                    <option label='Savings' value='Savings'>
-                                    <option label='Current' value='Current'>
-                                    ...
-                                    </datalist>
-                                    <button>Debit Account</button>
-                                </div>
-                            </div> 
-                        </div>
+                            <label for="role">Role</label>
+                            <input type='text' ... list='listid'>
+                            <datalist id='listid'>
+                             <option label='Admin' value='Admin'>
+                                 <option label='Staff' value='Staff'>
+                                     ...
+                                 </datalist>
 
 
-                        <input type="radio" name="tabs" id="view-recent">
-                        <label for="view-recent">View Recent</label>
-                        <div class="tab">
+                                 <label for="Password">Password</label>
+                                 <input type="Password" name="Password">
+
+                                 <button>Create</button>
+                             </div>
+                         </div>
+
+                         <input type="radio" name="tabs" id="view-recent">
+                         <label for="view-recent">View Recent</label>
+                         <div class="tab">
                             <h1>Recent Transactions</h1> 
                             <div class="list">
                                 <ul>
@@ -125,7 +108,7 @@
                                     <button class="modal-open" data-modal="modal1">Dactivate</button>
                                     <button class="modal-open" data-modal="modal11">Delete</button>
                                 </ul>
-                                
+
                                 <ul>
                                     <li data-label="s/n">2</li>
                                     <li data-label="account name">Omotayo Oyeniyi</li>
@@ -150,7 +133,8 @@
                             </div> 
                         </div>
                     </div>
-                </section>   
+                </section>
+
                 <section> 
                     <div class="modal" id="modal1">
                         <div class="modal-content">
@@ -287,12 +271,13 @@
                             </ul>
                         </div> 
                     </div>
-                </section>  
+
+                </section>         
             </div>
-    </div>
+        </div>        
         <footer>
             <p>Banka App &copy; 2019</p>
         </footer>
-    <script src="modal.js" type="text/javascript"></script>    
-</body>
-</html> 
+       <script src="{{url_for('static', filename='modal.js')}}"></script>    
+    </body>
+    </html> 

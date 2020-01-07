@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up To Banka</title>
+    <link rel="stylesheet" href="{{url_for('static', path='forms.css')}}">
+
+</head>
+<body>
+    <div class="forms">
+     <h1>User Sign Up</h1>
+     <div class="wrapper">
+        <form action="#">
+            <label >Full Name</label>
+            <input type="text" name="name" placeholder="Full Name">
+
+            <label >Email Adderss</label>
+            <input type="email" name="email" placeholder="Email Address">
+
+            <label >Create Password</label>
+            <input type="password" name="password" placeholder="Create Password">
+
+            <label >Confirm Password</label>
+            <input type="password" name="password" placeholder="Confirm Password">
+
+            <button>Sign Up</button>
+            <a href={{url_for("login")}}>Already have an Account? Log In</a>
+        </form>
+    </div>
+</div>
+</body>
+</html>
