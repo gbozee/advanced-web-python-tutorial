@@ -34,17 +34,25 @@ def staff():
     return render_template("staffPage.html",)
 
 
-@app.route("/login")
+@app.route("/login", methods=["POST","GET"])
 def login():
-    return render_template("login.html",)
-
+    if request.method == "GET":
+        return render_template("login.html", **{"form": {}, "errors": {}})
+    else:
+        data = request.form
+        result = service_layer.login_user(request.form)
+        if result.errors:
+            return render_template(
+                "login.html",**{"form":data,"errors":result.errors}
+            )
+        return redirect("user",)
 
 @app.route("/user")
 def user():
     return render_template("userPage.html",)
 
 
-@app.route("/signup", methods=["POST"])
+@app.route("/signup", methods=["GET","POST"])
 def signup():
     data = request.form
     result = service_layer.signup_user(request.form)

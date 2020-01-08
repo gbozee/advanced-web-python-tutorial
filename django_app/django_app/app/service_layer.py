@@ -63,3 +63,11 @@ def signup_user(form_data) -> Result:
     if not form.is_valid():
         return Result(errors=form.errors)
     return Result(data=form.cleaned_data)
+
+
+def login_user(form_data) -> Result:
+    form = UserForm(data=form_data)
+    if not form.is_valid():
+        return Result(errors=form.errors)
+    return Result(data=form.cleaned_data)
+    

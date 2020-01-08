@@ -7,16 +7,17 @@ class User(BaseModel):
     password: SecretStr
     confirm_password: SecretStr
 
-
-
     @validator("full_name")
-    def validate_full_name(cls, v,values,**kwargs):
+    def validate_full_name(cls, v, values, **kwargs):
         if not v:
             raise ValueError("Full name is required")
         return v
 
-
-
+    @validator("email")
+    def validate_email(cls, v, values, **kwargs):
+        if not v:
+            raise ValueError("Email is required")
+        return v
 
     @validator("confirm_password")
     def passwords_match(cls, v, values, **kwargs):
@@ -28,7 +29,6 @@ class User(BaseModel):
     def required(cls, v, values, **kwargs):
         if not v.get_secret_value():
             raise ValueError("password is required")
-        return v
 
 
 class Result:
@@ -41,6 +41,15 @@ def signup_user(form_data) -> Result:
     # import pdb
 
     # pdb.set_trace()
+    try:
+        data = User(**form_data)
+    except ValidationError as e:
+        errors = {x["loc"][0]: x["msg"] for x in e.errors()}
+        return Result(errors=errors)
+    return Result(data=data)
+
+
+def login_user(form_data) -> Result:
     try:
         data = User(**form_data)
     except ValidationError as e:

@@ -1,32 +1,40 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login To Banka</title>
-    <link rel="stylesheet" href="{% static  'forms.css' %}">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Login To Banka</title>
+        <link rel="stylesheet" href="{% static  'forms.css' %}">
 
-</head>
-<body>
-    <div class="forms">
-     <h1>User Login</h1>
-     <div class="wrapper">
-        <form action="#" >
+    </head>
+    <body>
+        <div class="forms">
+            <h1>User Login</h1>
+            <div class="wrapper">
+                <form action="{% url 'login' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-control" class="{% if errors.email %}error{% endif %}">
+                        {% if errors.email %}
+                            <span>{{errors.email}}</span>
+                        {% endif %}
+                        <label >Email Adderss</label>
+                        <input type="email" name="email" placeholder="Email Address">
+                    </div>
+                    <div class="form-control" class="{% if errors.password %}error{% endif %}">
+                        {% if errors.password %}
+                            <span>{{errors.password}}</span>
+                        {% endif %}
+                        <label >Password</label>
+                        <input type="password" name="password" placeholder="Enter Password">
+                    </div>
+                    <button type="submit" class="btn-a">Log In</button>
+                    <a href={% url 'signup' %}>Don't have an Account? Sign Up</a>
+                    <a href={% url 'home' %}>Visit Home Page</a>
 
-            <label >Email Adderss</label>
-            <input type="email" name="email" placeholder="Email Address">
-
-            <label >Password</label>
-            <input type="password" name="password" placeholder="Enter Password">
-
-            <a href="{% url "user" %}" id="button">Log In</a>
-            <a href={% url 'signup' %}>Don't have an Account? Sign Up</a>
-            <a href={% url 'home' %}>Visit Home Page</a>
-            
-        </form>
-    </div>
-</div>
-</body>
+                </form>
+            </div>
+        </div>
+    </body>
 </html>
