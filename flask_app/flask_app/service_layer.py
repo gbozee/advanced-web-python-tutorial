@@ -1,10 +1,24 @@
 from pydantic import BaseModel, EmailStr, SecretStr, validator, ValidationError
 
 
-class User(BaseModel):
-    full_name: str
+class Login(BaseModel):
     email: EmailStr
     password: SecretStr
+
+    @validator("email")
+    def validate_email(cls, v, values, **kwargs):
+        if not v:
+            raise ValueError("Email is required")
+        return v
+
+    @validator("password")
+    def required(cls, v, values, **kwargs):
+        if not v.get_secret_value():
+            raise ValueError("password is required")
+
+
+class User(Login):
+    full_name: str
     confirm_password: SecretStr
 
     @validator("full_name")
@@ -13,22 +27,11 @@ class User(BaseModel):
             raise ValueError("Full name is required")
         return v
 
-    @validator("email")
-    def validate_email(cls, v, values, **kwargs):
-        if not v:
-            raise ValueError("Email is required")
-        return v
-
     @validator("confirm_password")
     def passwords_match(cls, v, values, **kwargs):
         if "password" in values and v != values["password"]:
             raise ValueError("passwords do not match")
         return v
-
-    @validator("password")
-    def required(cls, v, values, **kwargs):
-        if not v.get_secret_value():
-            raise ValueError("password is required")
 
 
 class Result:
@@ -51,7 +54,7 @@ def signup_user(form_data) -> Result:
 
 def login_user(form_data) -> Result:
     try:
-        data = User(**form_data)
+        data = Login(**form_data)
     except ValidationError as e:
         errors = {x["loc"][0]: x["msg"] for x in e.errors()}
         return Result(errors=errors)

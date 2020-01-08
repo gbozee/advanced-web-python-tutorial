@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from . import service_layer
 
 
@@ -19,7 +20,7 @@ def login(request):
     if request.method == "GET":
         return render(request, "login.html", {})
     else:
-        result = service_layer.login_user(request.POST.dict())
+        result = service_layer.login_user(request.POST.dict(), request)
         if result.errors:
             return render(
                 request,
@@ -27,7 +28,6 @@ def login(request):
                 {"form": request.POST.dict(), "errors": result.errors},
             )
     return redirect("user")
-        
 
 
 def sign_up(request):
@@ -48,5 +48,6 @@ def staff(request):
     return render(request, "staffPage.html", {})
 
 
+@login_required(login_url="/login")
 def user(request):
     return render(request, "userPage.html", {})

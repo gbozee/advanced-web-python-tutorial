@@ -9,4 +9,5 @@ aiofiles==0.4.0
 python-multipart==0.0.5
 pydantic[email]==1.3
 uvicorn==0.11.1
+databases[sqlite]==0.2.6
 -e .

@@ -1,12 +1,29 @@
 from logging import error
 from pydantic import BaseModel, EmailStr, SecretStr, validator, ValidationError
 from django import forms
+from django.contrib.auth.models import User as BaseUser
+from django.contrib.auth import authenticate, login as _login_user
 
 
-class UserForm(forms.Form):
-    full_name = forms.CharField()
+class LoginForm(forms.Form):
     email = forms.EmailField()
     password = forms.CharField()
+
+    def login_user(self, request):
+        user = authenticate(
+            request,
+            username=self.cleaned_data["email"],
+            password=self.cleaned_data["password"],
+        )
+        # user = User.objects.get(email=self.cleaned_data['email])
+        # if user.check_password(self.cleaned_data['password'])
+        if user is not None:
+            _login_user(request, user)
+        return user
+
+
+class UserForm(LoginForm):
+    full_name = forms.CharField()
     confirm_password = forms.CharField()
 
     def clean(self):
@@ -18,7 +35,16 @@ class UserForm(forms.Form):
                 self.add_error("confirm_password", "Password is not the same")
         return data
 
-    
+    def save(self):
+        user = BaseUser.objects.create(
+            username=self.cleaned_data["email"],
+            email=self.cleaned_data["email"],
+            password=self.cleaned_data["password"],
+            first_name=self.cleaned_data["full_name"],
+        )
+        return user
+
+
 class User(BaseModel):
     full_name: str
     email: EmailStr
@@ -62,12 +88,16 @@ def signup_user(form_data) -> Result:
     form = UserForm(data=form_data)
     if not form.is_valid():
         return Result(errors=form.errors)
-    return Result(data=form.cleaned_data)
+    result = forms.save()
+    return Result(data=result)
 
 
-def login_user(form_data) -> Result:
-    form = UserForm(data=form_data)
+def login_user(form_data, request) -> Result:
+    form = LoginForm(data=form_data)
     if not form.is_valid():
         return Result(errors=form.errors)
-    return Result(data=form.cleaned_data)
-    
+    user = form.login_user(request)
+    if not user:
+        return Result(errors={"email": "Could not login user"})
+    return Result(data=user)
+

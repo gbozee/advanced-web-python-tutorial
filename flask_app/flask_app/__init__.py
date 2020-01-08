@@ -1,7 +1,16 @@
 from flask import Flask, render_template, request, redirect
-from flask_app import service_layer
+from flask_login import LoginManager, login_user,login_required
+from flask_app import service_layer, models
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
+login_manager = LoginManager()
+login_manager.login_view = "login"
+login_manager.init_app(app)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return models.AuthUser.get(user_id)
 
 
 @app.route("/")
@@ -34,31 +43,31 @@ def staff():
     return render_template("staffPage.html",)
 
 
-@app.route("/login", methods=["POST","GET"])
+@app.route("/login", methods=["POST", "GET"])
 def login():
-    if request.method == "GET":
-        return render_template("login.html", **{"form": {}, "errors": {}})
-    else:
-        data = request.form
+    if request.method == "POST":
         result = service_layer.login_user(request.form)
         if result.errors:
             return render_template(
-                "login.html",**{"form":data,"errors":result.errors}
+                "login.html", **{"form": request.form, "errors": result.errors}
             )
+        login_user(models.AuthUser(result.data.email))
         return redirect("user",)
+    return render_template("login.html", **{"form": {}, "errors": {}})
+
 
 @app.route("/user")
+@login_required
 def user():
     return render_template("userPage.html",)
 
 
-@app.route("/signup", methods=["GET","POST"])
+@app.route("/signup", methods=["GET", "POST"])
 def signup():
-    data = request.form
     result = service_layer.signup_user(request.form)
     if result.errors:
         return render_template(
-            "index.html", **{"form": data, "errors": result.errors}
+            "index.html", **{"form": request.form, "errors": result.errors}
         )
     return redirect("user")
 
