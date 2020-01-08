@@ -36,3 +36,12 @@ def signup_user(form_data) -> Result:
         errors = {x["loc"][0]: x["msg"] for x in e.errors()}
         return Result(errors=errors)
     return Result(data=data)
+
+
+def login_user(form_data) -> Result:
+    try:
+        data= User(**form_data)
+    except ValidationError as e:
+        errors = {x["loc"][0]: x["msg"] for x in e.errors()}
+        return Result(errors=errors)
+    return Result(data=data)

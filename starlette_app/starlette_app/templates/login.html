@@ -1,30 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login To Banka</title>
-    <link rel="stylesheet" href="{{url_for('static', path='forms.css')}}">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Login To Banka</title>
+        <link rel="stylesheet" href="{{url_for('static', path='forms.css')}}">
 
-</head>
-<body>
-    <div class="forms">
-     <h1>User Login</h1>
-     <div class="wrapper">
-        <form action="#" >
-
-            <label >Email Adderss</label>
-            <input type="email" name="email" placeholder="Email Address">
-
-            <label >Password</label>
-            <input type="password" name="password" placeholder="Enter Password">
-
-            <a href={{url_for("user")}} id="button">Log In</a>
-            <a href={{url_for("sign_up")}}>Don't have an Account? Sign Up</a>
-            <a href={{url_for("index")}}>Visit Home Page</a>
-        </form>
-    </div>
-</div>
-</body>
+    </head>
+    <body>
+        <div class="forms">
+            <h1>User Login</h1>
+            <div class="wrapper">
+                <form action="{{ url_for('login') }}" method="POST" class="sign-up">
+                    <div class="form-control" class="{% if errors.email %}error{% endif %}">
+                        <label >Email Adderss</label>
+                        <input type="email" name="email" value="{{form.email}}" placeholder="Email Address">
+                        {% if errors.email %}
+                            <span>{{errors.email}}</span>
+                        {% endif %} 
+                    </div>
+                    <div class="form-control" class="{% if errors.password %}error{% endif %}">
+                        <label >Password</label>
+                        <input type="password" name="password" value="{{form.password}}" placeholder="Enter Password">
+                        {% if errors.password %}
+                            <span>{{errors.password}}</span>
+                        {% endif %}
+                    </div>
+                    <button type="submit" class="btn-a">Log In</button>
+                    <a href={{url_for("signup")}}>Don't have an Account? Sign Up</a>
+                    <a href={{url_for("index")}}>Visit Home Page</a>
+                </form>
+            </div>
+        </div>
+    </body>
 </html>
