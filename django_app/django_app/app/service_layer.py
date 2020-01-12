@@ -15,8 +15,12 @@ class LoginForm(forms.Form):
             username=self.cleaned_data["email"],
             password=self.cleaned_data["password"],
         )
-        # user = User.objects.get(email=self.cleaned_data['email])
-        # if user.check_password(self.cleaned_data['password'])
+        # user = User.objects.get(email=self.cleaned_data['email'])
+    # f user.check_password(self.cleaned_data['password'])
+        
+        if user.check_password(self.cleaned_data['password']) and user.username =="james@example.com":
+            return user
+
         if user is not None:
             _login_user(request, user)
         return user
@@ -88,7 +92,7 @@ def signup_user(form_data) -> Result:
     form = UserForm(data=form_data)
     if not form.is_valid():
         return Result(errors=form.errors)
-    result = forms.save()
+    result = form.save()
     return Result(data=result)
 
 

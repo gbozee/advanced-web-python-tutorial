@@ -18,6 +18,8 @@ class Login(BaseModel):
 
 
 class User(Login):
+    # email: EmailStr
+    # password: SecretStr
     full_name: str
     confirm_password: SecretStr
 
@@ -32,6 +34,18 @@ class User(Login):
         if "password" in values and v != values["password"]:
             raise ValueError("passwords do not match")
         return v
+
+    # @validator("email")
+    # def validate_email(cls, v, values, **kwargs):
+    #     if not v:
+    #         raise ValueError("Email is required")
+    #     return v
+
+    # @validator("password")
+    # def required(cls, v, values, **kwargs):
+    #     if not v.get_secret_value():
+    #         raise ValueError("password is required")
+    #     return v
 
 
 class Result:

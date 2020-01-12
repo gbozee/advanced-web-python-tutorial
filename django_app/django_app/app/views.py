@@ -51,3 +51,9 @@ def staff(request):
 @login_required(login_url="/login")
 def user(request):
     return render(request, "userPage.html", {})
+
+
+
+@login_required()
+def logout(request):
+    return redirect('home')

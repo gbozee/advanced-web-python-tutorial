@@ -80,6 +80,14 @@ async def sign_up(request: Request):
     return RedirectResponse("/user")
 
 
+def logout(request: Request):
+    request.session["user"] = None
+    return RedirectResponse("/login")
+    
+
+
+
+
 def user(request: Request):
     return templates.TemplateResponse("userPage.html", {"request": request})
 
@@ -96,6 +104,7 @@ app = Starlette(
         Route("/admin", admin, methods=["GET"], name="admin"),
         Route("/staff", staff, methods=["GET"], name="staff"),
         Route("/login", login, methods=["GET", "POST"], name="login"),
+        Route("/logout", logout, methods=["GET",], name="logout"),
         Route("/signup", sign_up, methods=["GET", "POST"], name="signup"),
         Route(
             "/user",
