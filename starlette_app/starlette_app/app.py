@@ -82,7 +82,7 @@ async def sign_up(request: Request):
     request.session["user"] = result.data.email
     return RedirectResponse("/user")
 
-@requires('authenticated')
+@requires('authenticated',redirect="login")
 def logout(request: Request):
     request.session["user"] = None
     return RedirectResponse("/login")
