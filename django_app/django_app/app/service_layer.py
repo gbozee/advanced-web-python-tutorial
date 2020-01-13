@@ -5,6 +5,18 @@ from django.contrib.auth.models import User as BaseUser
 from django.contrib.auth import authenticate, login as _login_user
 
 
+class AuthenticateError(Exception):
+    pass
+
+
+def authenticate_user(user):
+    if not user:
+        raise AuthenticateError
+    if user.username != "james@example.com":
+        raise AuthenticateError
+    return user
+
+
 class LoginForm(forms.Form):
     email = forms.EmailField()
     password = forms.CharField()
@@ -16,14 +28,17 @@ class LoginForm(forms.Form):
             password=self.cleaned_data["password"],
         )
         # user = User.objects.get(email=self.cleaned_data['email'])
-    # f user.check_password(self.cleaned_data['password'])
-        
-        if user.check_password(self.cleaned_data['password']) and user.username =="james@example.com":
+        # f user.check_password(self.cleaned_data['password'])
+        try:
+            user = authenticate_user(user)
+        except AuthenticateError:
+            return None
+        if user.check_password(self.cleaned_data["password"]):
+            _login_user(request, user)
             return user
 
-        if user is not None:
-            _login_user(request, user)
-        return user
+        # if user is not None:
+        # return user
 
 
 class UserForm(LoginForm):

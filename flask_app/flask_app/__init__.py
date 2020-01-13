@@ -1,19 +1,26 @@
+import os
 from flask import Flask, render_template, request, redirect, url_for
-from flask_login import LoginManager, login_user, login_required
+from flask_login import LoginManager, login_user, login_required, logout_user
 from flask_app import service_layer, models
+from flask_app.models import db
+from flask_migrate import Migrate
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_LOCATION = os.path.join(BASE_DIR, "app.db")
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
+app.config["SECRET_KEY"] = b"password"
+app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_LOCATION}"
 login_manager = LoginManager()
 login_manager.login_view = "login"
 login_manager.init_app(app)
-
-
-app.secret_key = b"password"
+db.init_app(app)
+migrate = Migrate(app, db)
 
 
 @login_manager.user_loader
 def load_user(user_id):
-    return models.AuthUser.get(user_id)
+    return models.User.get(user_id)
 
 
 @app.route("/")
@@ -49,14 +56,14 @@ def login():
             return render_template(
                 "login.html", **{"form": request.form, "errors": result.errors}
             )
-        login_user(models.AuthUser(result.data.email))
-        return redirect("user",)
+        return redirect("user")
     return render_template("login.html", **{"form": {}, "errors": {}})
 
 
 @app.route("/logout")
+@login_required
 def logout():
-    # session.clear()
+    logout_user()
     return redirect(url_for("home"))
 
 
@@ -71,10 +78,12 @@ def signup():
     if request.method == "POST":
         result = service_layer.signup_user(request.form)
         if result.errors:
-            return render_template("index.html", **{"form": request.form, "errors": result.errors})
-        login_user(models.AuthUser(result.data.email))
+            return render_template(
+                "index.html", **{"form": request.form, "errors": result.errors}
+            )
         return redirect("user",)
     return render_template("index.html", **{"form": {}, "errors": {}})
+
 
 # @app.route("/signup", methods=["GET", "POST"])
 # def signup():
@@ -84,8 +93,6 @@ def signup():
 #             "index.html", **{"form": request.form, "errors": result.errors}
 #         )
 #     return redirect("user")
-
-
 
 
 @app.route("/forgotpassword")

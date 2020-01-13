@@ -1,4 +1,5 @@
 from pydantic import BaseModel, EmailStr, SecretStr, validator, ValidationError
+from starlette_app import models
 
 
 class Login(BaseModel):
@@ -29,7 +30,7 @@ class Result:
         self.data = data
 
 
-def signup_user(form_data) -> Result:
+async def signup_user(form_data, request) -> Result:
     # import pdb
 
     # pdb.set_trace()
@@ -38,10 +39,14 @@ def signup_user(form_data) -> Result:
     except ValidationError as e:
         errors = {x["loc"][0]: x["msg"] for x in e.errors()}
         return Result(errors=errors)
+    user = await models.User.create_user(
+        full_name=data.full_name, email=data.email, password=data.password
+    )
+    request.session["user"] = user.email
     return Result(data=data)
 
 
-def login_user(form_data, request) -> Result:
+async def login_user(form_data, request) -> Result:
     try:
         data = Login(**form_data)
     except ValidationError as e:
@@ -56,14 +61,12 @@ class AuthenticateError(Exception):
     pass
 
 
-def authenticate_user(user):
+async def authenticate_user(user):
     if not user:
         raise AuthenticateError
-    if user != "james@example.com":
-        raise AuthenticateError
+    result = await models.User.objects.get(email=user)
     return user
-
-
-
-
+    # if user != "james@example.com":
+    #     raise AuthenticateError
+    # return user
 
