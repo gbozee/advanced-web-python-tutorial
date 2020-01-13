@@ -1,4 +1,6 @@
 from pydantic import BaseModel, EmailStr, SecretStr, validator, ValidationError
+from flask_login import login_user as _login_user
+from . import models
 
 
 class Login(BaseModel):
@@ -17,9 +19,9 @@ class Login(BaseModel):
             raise ValueError("password is required")
 
 
-class User(Login):
-    # email: EmailStr
-    # password: SecretStr
+class User(BaseModel):
+    email: EmailStr
+    password: SecretStr
     full_name: str
     confirm_password: SecretStr
 
@@ -35,17 +37,17 @@ class User(Login):
             raise ValueError("passwords do not match")
         return v
 
-    # @validator("email")
-    # def validate_email(cls, v, values, **kwargs):
-    #     if not v:
-    #         raise ValueError("Email is required")
-    #     return v
+    @validator("email")
+    def validate_email(cls, v, values, **kwargs):
+        if not v:
+            raise ValueError("Email is required")
+        return v
 
-    # @validator("password")
-    # def required(cls, v, values, **kwargs):
-    #     if not v.get_secret_value():
-    #         raise ValueError("password is required")
-    #     return v
+    @validator("password")
+    def required(cls, v, values, **kwargs):
+        if not v.get_secret_value():
+            raise ValueError("password is required")
+        return v
 
 
 class Result:
@@ -63,6 +65,12 @@ def signup_user(form_data) -> Result:
     except ValidationError as e:
         errors = {x["loc"][0]: x["msg"] for x in e.errors()}
         return Result(errors=errors)
+    user = models.User.create(
+        full_name=data.full_name,
+        email=data.email,
+        password=data.password.get_secret_value(),
+    )
+    _login_user(user)
     return Result(data=data)
 
 
@@ -72,4 +80,5 @@ def login_user(form_data) -> Result:
     except ValidationError as e:
         errors = {x["loc"][0]: x["msg"] for x in e.errors()}
         return Result(errors=errors)
+    login_user(models.User.get(data.email))
     return Result(data=data)

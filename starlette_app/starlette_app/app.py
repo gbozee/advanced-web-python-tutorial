@@ -15,7 +15,8 @@ from starlette.authentication import (
 from starlette.middleware import Middleware
 from starlette.middleware.sessions import SessionMiddleware
 from starlette.middleware.authentication import AuthenticationMiddleware
-from starlette_app import service_layer, settings
+from starlette_app import service_layer, settings, models
+import databases
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
@@ -24,6 +25,17 @@ templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
 
 # @app.route("/",methods=['GET'])
 
+database = databases.Database(settings.DATABASE_URL)
+
+
+async def startup():
+    await database.connect()
+    models.init_tables(database)
+
+
+async def shutdown():
+    await database.disconnect()
+
 
 class AuthBackend(AuthenticationBackend):
     async def authenticate(self, request):
@@ -31,7 +43,7 @@ class AuthBackend(AuthenticationBackend):
         #     return
         auth = request.session.get("user")
         try:
-            user_instance = service_layer.authenticate_user(auth)
+            user_instance = await service_layer.authenticate_user(auth)
         except (service_layer.AuthenticateError) as exc:
             raise AuthenticationError("Invalid auth")
 
@@ -56,7 +68,7 @@ def staff(request: Request):
 async def login(request: Request):
     if request.method == "POST":
         form_data = await request.form()
-        result = service_layer.login_user(form_data,request)
+        result = await service_layer.login_user(form_data, request)
         if result.errors:
             return templates.TemplateResponse(
                 "login.html",
@@ -70,24 +82,22 @@ async def login(request: Request):
 
 async def sign_up(request: Request):
     form_data = await request.form()
-    result = service_layer.signup_user(form_data)
+    result = await service_layer.signup_user(form_data, request)
     if result.errors:
         return templates.TemplateResponse(
             "index.html",
             {"request": request, "form": form_data, "errors": result.errors},
         )
-    request.session["user"] = result.data.email
-    return RedirectResponse("/user")
+    return RedirectResponse("/user", status_code=301)
 
 
+@requires("authenticated")
 def logout(request: Request):
     request.session["user"] = None
     return RedirectResponse("/login")
-    
 
 
-
-
+@requires("authenticated", redirect="login")
 def user(request: Request):
     return templates.TemplateResponse("userPage.html", {"request": request})
 
@@ -98,6 +108,8 @@ app = Starlette(
         Middleware(SessionMiddleware, secret_key=settings.SECRET_KEY,),
         Middleware(AuthenticationMiddleware, backend=AuthBackend()),
     ],
+    on_startup=[startup],
+    on_shutdown=[shutdown],
     routes=[
         Route("/", home, methods=["GET"], name="home"),
         Route("/", home, methods=["GET"], name="index"),
@@ -108,7 +120,8 @@ app = Starlette(
         Route("/signup", sign_up, methods=["GET", "POST"], name="signup"),
         Route(
             "/user",
-            requires("authenticated", redirect="login")(user),
+            # requires("authenticated", redirect="login")(user),
+            user,
             methods=["GET"],
             name="user",
         ),
@@ -120,3 +133,6 @@ app = Starlette(
     ],
 )
 
+
+def init_db():
+    models.init_tables(database)
