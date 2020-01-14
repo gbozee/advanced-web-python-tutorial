@@ -92,6 +92,7 @@ async def sign_up(request: Request):
             {"request": request, "form": form_data, "errors": result.errors},
         )
     return RedirectResponse("/user", status_code=301)
+    
 
 @requires('authenticated',redirect="login")
 def logout(request: Request):

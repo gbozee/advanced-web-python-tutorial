@@ -55,3 +55,11 @@ class User(db.Model, UserMixin, PasswordMixin):
     @classmethod
     def get(cls, user_id):
         return cls.query.filter_by(email=user_id).first()
+
+class Role(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    roles=db.Column(db.String, unique=True, nullable=False)
+    
+    
+    def __repr__(self):
+        return '<Role {}>'.format(self.roles)

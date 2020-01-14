@@ -3,6 +3,7 @@ from flask_login import login_user as _login_user
 from . import models
 
 
+
 class Login(BaseModel):
     email: EmailStr
     password: SecretStr
@@ -17,6 +18,7 @@ class Login(BaseModel):
     def required(cls, v, values, **kwargs):
         if not v.get_secret_value():
             raise ValueError("password is required")
+        return v
 
 
 class User(BaseModel):
@@ -57,9 +59,7 @@ class Result:
 
 
 def signup_user(form_data) -> Result:
-    # import pdb
-
-    # pdb.set_trace()
+    import pdb; pdb.set_trace()
     try:
         data = User(**form_data)
     except ValidationError as e:
@@ -75,6 +75,7 @@ def signup_user(form_data) -> Result:
 
 
 def login_user(form_data) -> Result:
+    # import pdb; pdb.set_trace()
     try:
         data = Login(**form_data)
     except ValidationError as e:

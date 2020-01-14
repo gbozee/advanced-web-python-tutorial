@@ -2,9 +2,55 @@ from pydantic import BaseModel, EmailStr, SecretStr, validator, ValidationError
 from starlette_app import models
 
 
+# class Login(BaseModel):
+#     email: EmailStr
+#     password: SecretStr
+
+#     @validator("password")
+#     def required(cls, v, values, **kwargs):
+#         if not v.get_secret_value():
+#             raise ValueError("password is required")
+#         return v
+
+
+# class User(Login):
+#     full_name: str
+#     confirm_password: SecretStr
+
+#     @validator("confirm_password")
+#     def passwords_match(cls, v, values, **kwargs):
+#         if "password" in values and v != values["password"]:
+#             raise ValueError("passwords do not match")
+#         return v
+
+
 class Login(BaseModel):
     email: EmailStr
     password: SecretStr
+
+    @validator("email")
+    def validate_email(cls, v, values, **kwargs):
+        if not v:
+            raise ValueError("Email is required")
+        return v
+
+    @validator("password")
+    def required(cls, v, values, **kwargs):
+        if not v.get_secret_value():
+            raise ValueError("password is required")
+
+
+class User(BaseModel):
+    email: EmailStr
+    password: SecretStr
+    full_name: str
+    confirm_password: SecretStr
+
+    @validator("full_name")
+    def validate_full_name(cls, v, values, **kwargs):
+        if not v:
+            raise ValueError("Full name is required")
+        return v
 
     @validator("password")
     def required(cls, v, values, **kwargs):
@@ -12,15 +58,16 @@ class Login(BaseModel):
             raise ValueError("password is required")
         return v
 
-
-class User(Login):
-    full_name: str
-    confirm_password: SecretStr
-
     @validator("confirm_password")
     def passwords_match(cls, v, values, **kwargs):
         if "password" in values and v != values["password"]:
             raise ValueError("passwords do not match")
+        return v
+
+    @validator("email")
+    def validate_email(cls, v, values, **kwargs):
+        if not v:
+            raise ValueError("Email is required")
         return v
 
 
@@ -32,7 +79,6 @@ class Result:
 
 async def signup_user(form_data, request) -> Result:
     # import pdb
-
     # pdb.set_trace()
     try:
         data = User(**form_data)

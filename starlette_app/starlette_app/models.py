@@ -30,6 +30,12 @@ class User(Base, PasswordMixin):
             "id": {"primary_key": True, "index": True, "unique": True},
             "email": {"index": True, "index": True, "unique": True},
         }
+    class ExtraConfig:
+        table_name = "roles"
+        table_config = {
+            "role":{"index": True, "index": True, "unique": True}
+            
+        }
 
     @classmethod
     async def create_user(cls, **kwargs):
@@ -37,6 +43,15 @@ class User(Base, PasswordMixin):
         result.set_password(kwargs["password"])
         await result.save()
         return result
+
+
+
+
+
+
+
+
+
 
 
 def init_tables(database,):

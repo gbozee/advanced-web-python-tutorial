@@ -10,7 +10,7 @@ DB_LOCATION = os.path.join(BASE_DIR, "app.db")
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
 app.config["SECRET_KEY"] = b"password"
-app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_LOCATION}"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///{DB_LOCATION}"
 login_manager = LoginManager()
 login_manager.login_view = "login"
 login_manager.init_app(app)

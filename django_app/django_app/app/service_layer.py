@@ -12,8 +12,6 @@ class AuthenticateError(Exception):
 def authenticate_user(user):
     if not user:
         raise AuthenticateError
-    if user.username != "james@example.com":
-        raise AuthenticateError
     return user
 
 
@@ -89,6 +87,9 @@ class User(BaseModel):
         return v
 
 
+class Role(User):
+    role=str
+
 class Result:
     def __init__(self, errors=None, data=None):
         self.errors = errors
@@ -96,14 +97,7 @@ class Result:
 
 
 def signup_user(form_data) -> Result:
-    # import pdb
 
-    # pdb.set_trace()
-    # try:
-    #     data = User(**form_data)
-    # except ValidationError as e:
-    #     errors = {x["loc"][0]: x["msg"] for x in e.errors()}
-    # return Result(errors=errors)
     form = UserForm(data=form_data)
     if not form.is_valid():
         return Result(errors=form.errors)
