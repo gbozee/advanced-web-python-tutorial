@@ -56,7 +56,8 @@ class UserForm(LoginForm):
         user = BaseUser.objects.create(
             username=self.cleaned_data["email"],
             email=self.cleaned_data["email"],
-            password=self.cleaned_data["password"],
+            # password=self.cleaned_data["password"],
+            password=self.set_password('password'),
             first_name=self.cleaned_data["full_name"],
         )
         return user
