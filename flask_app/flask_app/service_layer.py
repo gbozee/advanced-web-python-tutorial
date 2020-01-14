@@ -3,7 +3,6 @@ from flask_login import login_user as _login_user
 from . import models
 
 
-
 class Login(BaseModel):
     email: EmailStr
     password: SecretStr
@@ -35,9 +34,10 @@ class User(BaseModel):
 
     @validator("confirm_password")
     def passwords_match(cls, v, values, **kwargs):
-        if "password" in values and v != values["password"]:
-            raise ValueError("passwords do not match")
-        return v
+        if v and values.get("password"):
+            if v.get_secret_value() == values["password"].get_secret_value():
+                return v
+        raise ValueError("passwords do not match")
 
     @validator("email")
     def validate_email(cls, v, values, **kwargs):
@@ -59,7 +59,6 @@ class Result:
 
 
 def signup_user(form_data) -> Result:
-    import pdb; pdb.set_trace()
     try:
         data = User(**form_data)
     except ValidationError as e:

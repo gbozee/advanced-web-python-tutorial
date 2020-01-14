@@ -18,6 +18,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+<<<<<<< HEAD
     path("",views.home,name='home'),
     path("",views.index,name='index'),
     path("login",views.login,name='login'),
@@ -26,4 +27,14 @@ urlpatterns = [
     path("staff",views.staff,name='staff'),
     path("user",views.user,name='user'),
     path('admin/', admin.site.urls),
+=======
+    path("", views.home, name="home"),
+    path("", views.index, name="index"),
+    path("login", views.login, name="login"),
+    path("logout", views.logout, name="logout"),
+    path("signup", views.sign_up, name="signup"),
+    path("staff", views.staff, name="staff"),
+    path("user", views.user, name="user"),
+    path("admin/", admin.site.urls),
+>>>>>>> 2042d2b78faf0975aa4de6779178ac3ed552d27b
 ]

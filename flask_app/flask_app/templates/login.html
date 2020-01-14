@@ -12,7 +12,7 @@
         <div class="forms">
             <h1>User Login</h1>
             <div class="wrapper">
-                <form action="{{ url_for('login') }}" method="POST" class="sign-up">
+                <form action="{{ url_for('views.login') }}" method="POST" class="sign-up">
                     <div class="form-control" class="{% if errors.email %}error{% endif %}">
                         <label >Email Adderss</label>
                         <input type="email" name="email" value="{{form.email}}" placeholder="Email Address">
@@ -28,8 +28,8 @@
                         {% endif %}
                     </div>
                     <button type="submit" class="btn-a">Log In</button>
-                    <a href={{url_for("signup")}}>Don't have an Account? Sign Up</a>
-                    <a href={{url_for("home")}}>Visit Home Page</a>
+                    <a href={{url_for("views.signup")}}>Don't have an Account? Sign Up</a>
+                    <a href={{url_for("views.home")}}>Visit Home Page</a>
                 </form>
             </div>
         </div>
