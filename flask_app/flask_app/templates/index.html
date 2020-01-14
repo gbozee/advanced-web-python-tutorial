@@ -8,7 +8,7 @@
         </header>
         <div class="top-box" id="top-box-a">
             <h3>Sign Up Now</h3>
-            <form action="{{url_for('signup')}}" method="POST" class="sign-up">
+            <form action="{{url_for('views.signup')}}" method="POST" class="sign-up">
                 <div class="form-control" class="{% if errors.full_name %}error{% endif %}">
                     <label >Full Name</label>
                     <input type="text" name="full_name" value="{{form.full_name}}" placeholder="Full Name">
@@ -39,8 +39,8 @@
                 </div>
                 <div class="form-control">
                     <button type="submit" class="btn-a">Sign UP</button>
-                    <!-- <a href={{url_for("login")}} class="btn-a" >Log In</a>  -->
-                    <a href={{url_for("login")}}>Have an account? Login In</a>
+                    <!-- <a href={{url_for("views.login")}} class="btn-a" >Log In</a>  -->
+                    <a href={{url_for("views.login")}}>Have an account? Login In</a>
 
                 </div>
             </form>

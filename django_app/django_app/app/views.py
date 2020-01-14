@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import logout
+from django.contrib.auth import logout as logout_user
 from . import service_layer
 
 
@@ -56,6 +56,6 @@ def user(request):
 
 @login_required()
 def logout(request):
-    logout(request)
+    logout_user(request)
     return redirect("home")
 

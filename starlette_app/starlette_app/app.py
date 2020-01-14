@@ -44,7 +44,7 @@ class AuthBackend(AuthenticationBackend):
         auth = request.session.get("user")
         if not auth:
             return
-            
+
         try:
             user_instance = await service_layer.authenticate_user(auth)
         except (service_layer.AuthenticateError) as exc:
@@ -92,9 +92,9 @@ async def sign_up(request: Request):
             {"request": request, "form": form_data, "errors": result.errors},
         )
     return RedirectResponse("/user", status_code=301)
-    
 
-@requires('authenticated',redirect="login")
+
+@requires("authenticated", redirect="login")
 def logout(request: Request):
     request.session["user"] = None
     return RedirectResponse("/login")

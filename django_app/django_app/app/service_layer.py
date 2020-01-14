@@ -56,9 +56,11 @@ class UserForm(LoginForm):
         user = BaseUser.objects.create(
             username=self.cleaned_data["email"],
             email=self.cleaned_data["email"],
-            password=self.cleaned_data["password"],
             first_name=self.cleaned_data["full_name"],
         )
+        user.set_password(self.cleaned_data["password"])
+        user.save()
+        # password=self.cleaned_data["password"],
         return user
 
 
@@ -88,7 +90,8 @@ class User(BaseModel):
 
 
 class Role(User):
-    role=str
+    role = str
+
 
 class Result:
     def __init__(self, errors=None, data=None):
