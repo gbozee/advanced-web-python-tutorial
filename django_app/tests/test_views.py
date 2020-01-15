@@ -1,6 +1,8 @@
 import pytest
 from django.contrib.auth.models import User
 from django.test import SimpleTestCase
+from django.db import IntegrityError
+# from django.db.models.sql.
 
 
 @pytest.fixture
@@ -60,3 +62,24 @@ def test_only_logged_in_user_in_user_page(client, create_user):
     assert response.status_code == 200 
     assert "User Dashboard".encode('utf-8') in response.content
 
+@pytest.mark.django_db
+def test_user_already_exist(client,create_user):
+     response = client.post(
+         "/signup",
+         data={
+             "full_name": "James Devito",
+             "email": "james@example.com",
+             "password": "password1010",
+             "confirm_password": "password1010",
+             },
+    )
+    #  import pdb; pdb.set_trace()
+     assert response.status_code == 200
+     assert User.objects.count() == 1
+
+     assert User.objects.filter(username='danny@example.com') != 'james@example.com'
+    #  assert user.username == "danny@example.com" 
+    #  user= User.objects.filter(user)
+
+     
+     

@@ -80,5 +80,5 @@ def login_user(form_data) -> Result:
     except ValidationError as e:
         errors = {x["loc"][0]: x["msg"] for x in e.errors()}
         return Result(errors=errors)
-    login_user(models.User.get(data.email))
+    _login_user(models.User.get(data.email))
     return Result(data=data)

@@ -14,7 +14,7 @@ def create_app(db_url="sqlite:///{}".format(DB_LOCATION)):
     app.config["SECRET_KEY"] = b"password"
     app.config["SQLALCHEMY_DATABASE_URI"] = db_url
     login_manager = LoginManager()
-    login_manager.login_view = "login"
+    login_manager.login_view = "views.login"
     login_manager.init_app(app)
     db.init_app(app)
     migrate = Migrate(app, db)

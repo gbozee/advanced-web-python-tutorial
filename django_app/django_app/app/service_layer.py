@@ -3,11 +3,16 @@ from pydantic import BaseModel, EmailStr, SecretStr, validator, ValidationError
 from django import forms
 from django.contrib.auth.models import User as BaseUser
 from django.contrib.auth import authenticate, login as _login_user
+from django.db import IntegrityError
 
 
 class AuthenticateError(Exception):
     pass
 
+def database_auth(user):
+    if user.username ==  user:
+        raise AuthenticateError
+    return user
 
 def authenticate_user(user):
     if not user:
@@ -42,14 +47,21 @@ class LoginForm(forms.Form):
 class UserForm(LoginForm):
     full_name = forms.CharField()
     confirm_password = forms.CharField()
+        
+    
 
     def clean(self):
         data = super().clean()
         password = data.get("password")
+        username= data.get("email")
+        if username == "james@example.com":
+            self.add_error("email", "Email already exist")
         confirm_password = data.get("confirm_password")
         if password and confirm_password:
             if password != confirm_password:
                 self.add_error("confirm_password", "Password is not the same")
+                
+            
         return data
 
     def save(self):
@@ -87,6 +99,13 @@ class User(BaseModel):
         if not v.get_secret_value():
             raise ValueError("password is required")
         return v
+    
+    # @validator("username")
+    # def validate_useername()
+    # try:
+    # # code that produces error
+    # except IntegrityError as e:
+    # return render_to_response("template.html", {"message": e.message})
 
 
 class Role(User):
@@ -102,6 +121,7 @@ class Result:
 def signup_user(form_data) -> Result:
 
     form = UserForm(data=form_data)
+    
     if not form.is_valid():
         return Result(errors=form.errors)
     result = form.save()
