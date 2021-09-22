@@ -1,4 +1,4 @@
-django==3.0.2
+django==3.1.13
 
 # test framework
 pytest-django==3.7.0
